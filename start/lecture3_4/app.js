@@ -77,6 +77,9 @@ class App{
             this.room.add( object );
         }
         
+        this.highlight = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({color : 0xFFFFFF, side : THREE.BackSide}));
+        this.highlight.scale.set(1.2,1.2,1.2);
+        this.scene.add(this.highlight);
     }
     
     setupXR(){
@@ -85,6 +88,22 @@ class App{
         const button = new VRButton( this.renderer );
         
         this.controllers = this.buildControllers();
+
+        function onSelectStart(){
+            this.children[0].scale.z = 10;
+            this.userData.selectPressed = true;
+        }
+
+        function onSelectEnd(){
+            this.children[0].scale.z = 0;
+            self.highlight.visible = false;
+            this.userData.selectPressed = false;
+        }
+
+        this.controller.forEach((controller)=>{
+            controller.addEventListener("selectstart", onSelectStart);
+            controller.addEventListener("selectEnd", onSelectEnd);
+        })
         
     }
     
