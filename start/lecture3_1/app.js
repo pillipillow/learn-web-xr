@@ -60,6 +60,22 @@ class App{
         );
         this.room.geometry.translate(0,3,0);
         this.scene.add(this.room);
+        
+        const geometry = new THREE.IcosahedronBufferGeometry(this.radius,2);
+
+        for(let i=0; i<200;i++)
+        {
+            const object = new THREE.Mesh(geometry, 
+                new THREE.MeshLambertMaterial(
+                    {color: Math.random() * 0xFFFFFF
+                }));
+
+            object.position.x = this.random(-2,2);
+            object.position.y = this.random(-2,2);
+            object.position.z = this.random(-2,2);
+
+            this.room.add(object);
+        }
     }
     
     setupXR(){
