@@ -13,16 +13,18 @@ class VRButton{
             const button = document.createElement("button");
             button.style.display = "none";
             button.style.height = "40px";
-            document.body.appendChild(button);
-
+            
             navigator.xr.isSessionSupported("immersive-vr").then((supported) =>
             {
                 supported ? this.showEnterVR(button) : this.showWebXRNotFound(button);
             })
+
+            document.body.appendChild(button);
+
 		} else {
             const message = document.createElement("a");
             if(window.isSecureContext === false){
-                message.href = document.locatiom.href.replace(/^http:/,"https:");
+                message.href = document.locatiom.href.replace(/^http:/,'https:');
                 message.innerHTML = "WEBXR NEEDS HTTPS";
             }
             else
@@ -45,6 +47,7 @@ class VRButton{
 
 	showEnterVR( button ) {
         let currentSession = null;
+        const self = this;
 
         this.stylizeElement(button, true, 30, true);
 
@@ -65,8 +68,6 @@ class VRButton{
             button.innerHTML = '<i class = "fas fa-vr-cardboard"></i>';
             button.style.opacity = "0.5";
         }
-
-        const self = this;
 
         function onSessionStarted(session){
             currentSession.addEventListener("end", onSessionEnded);
@@ -90,7 +91,7 @@ class VRButton{
         button.onclick = function(){
             if(currentSession === null)
             {
-                const sessionInit = {optionalFeatures:["local-floor","bounded-floor"]};
+                var sessionInit = {optionalFeatures:["local-floor","bounded-floor"]};
                 navigator.xr.requestSession("immersive-vr",sessionInit).then(onSessionStarted);
             }
             else
