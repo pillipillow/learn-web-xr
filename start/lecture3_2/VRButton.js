@@ -17,12 +17,13 @@ class VRButton{
             navigator.xr.isSessionSupported("immersive-vr").then((supported) =>
             {
                 supported ? this.showEnterVR(button) : this.showWebXRNotFound(button);
-            })
+            });
 
             document.body.appendChild(button);
 
 		} else {
             const message = document.createElement("a");
+            
             if(window.isSecureContext === false){
                 message.href = document.locatiom.href.replace(/^http:/,'https:');
                 message.innerHTML = "WEBXR NEEDS HTTPS";
@@ -70,7 +71,7 @@ class VRButton{
         }
 
         function onSessionStarted(session){
-            currentSession.addEventListener("end", onSessionEnded);
+            session.addEventListener("end", onSessionEnded);
             self.renderer.xr.setSession(session);
 
             self.stylizeElement(button, false, 12, true);
