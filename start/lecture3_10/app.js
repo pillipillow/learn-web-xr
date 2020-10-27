@@ -167,11 +167,11 @@ class App{
         this.stats.update();
         this.ui.update();
         if (this.renderer.xr.isPresenting){
-            /*const pos = this.controller.getWorldPosition( this.origin );
+            const pos = this.controller.getWorldPosition( this.origin );
             this.euler.setFromQuaternion( this.controller.getWorldQuaternion( this.quaternion ));
             
             const msg = this.createMsg( pos, this.euler );
-            this.ui.updateElement("msg", msg);*/
+            this.ui.updateElement("msg", msg);
         }
         this.renderer.render( this.scene, this.camera );
     }
